@@ -10,6 +10,12 @@
         <div class="card card">
           <div class="card-header text-left">
             <h4 class="card-title">ATM Machine</h4>
+            <h4 class="card-title">
+              Current Balance:
+              <span class="font-weight-bold"
+                >{{ currentBalance | number: "1.2-2" }}
+              </span>
+            </h4>
           </div>
           <div class="card-body">
             <div class="row">
