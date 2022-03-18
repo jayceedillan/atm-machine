@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div tabindex="-1" role="dialog" class="modal fade show d-block">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div
+            class="card border-0 mb-0 card-secondary"
+            header-classes="bg-white pb-5"
+            body-classes="px-lg-5 py-lg-5"
+          >
+            <div class="card-body text-center">
+              <div class="text-muted mb-4 mt-2">
+                <h4>Are you sure you want to proceed?</h4>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-6">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  (click)="isClickYesOrNo(true)"
+                >
+                  Yes
+                </button>
+              </div>
+              <div class="col-md-6">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  (click)="isClickYesOrNo(false)"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

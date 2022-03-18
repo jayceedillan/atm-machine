@@ -1,0 +1,23 @@
+.button-numbers {
+  height: 100px;
+  font-size: 48px !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.blockquote {
+  font-size: 50px !important;
+  line-height: 0.8 !important;
+}
+
+.btn-warning {
+  font-size: 18px !important;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 400px !important;
+    margin: 1.75rem auto;
+  }
+}

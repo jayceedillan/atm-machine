@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "atm-machine": {
+    "ATM-Machine": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -31,7 +31,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/main.scss",
+              "src/assets/scss/white-dashboard.scss",
+              "src/assets/css/nucleo-icons.css"
             ],
             "scripts": []
           },
@@ -72,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "atm-machine:build:production"
+              "browserTarget": "ATM-Machine:build:production"
             },
             "development": {
-              "browserTarget": "atm-machine:build:development"
+              "browserTarget": "ATM-Machine:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "atm-machine:build"
+            "browserTarget": "ATM-Machine:build"
           }
         },
         "test": {
@@ -107,5 +109,5 @@
       }
     }
   },
-  "defaultProject": "atm-machine"
+  "defaultProject": "ATM-Machine"
 }
