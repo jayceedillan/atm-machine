@@ -10,23 +10,27 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 export class HomeComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userId = Number(this.authenticationService.getUserToken());
+    this.getCurrentBalance();
+  }
 
   title = 'ATM-Machine';
   tempAmount: string = '0';
   displayAmount: string = '0';
-  amount: number = 0;
+
   showModal: boolean = false;
   typeOfTransaction: string = '';
   transaction: Transaction = {
     amount: 0,
-    pinNo: 0,
+    userId: 0,
     typeOfTransaction: '',
     transactionDate: new Date(),
   };
-
+  userId: number = 0;
   notifyMessage: string = '';
   alertyType: string = 'alert-success';
+  currentBalance: number = 0;
 
   clickAmount(val: number) {
     this.tempAmount = `${this.tempAmount}${val}`;
@@ -46,33 +50,72 @@ export class HomeComponent implements OnInit {
 
     if (isYes && this.typeOfTransaction === 'clear') {
       this.displayAmount = '0';
+      this.tempAmount = '0';
       return;
     }
 
-    this.processTransaction(isYes);
+    const amountTransaction = Number(this.displayAmount.replace(/\,/g, ''));
+
+    if (amountTransaction === 0) {
+      this.showNotify('Please input the valid amount', 'alert-danger');
+      return;
+    }
+
+    if (isYes && this.typeOfTransaction === 'withdrawal') {
+      const validAmount = this.validateCurrentBalance(amountTransaction);
+
+      if (!validAmount) {
+        this.showNotify(
+          'Chosen amount is greater than your current balance.',
+          'alert-danger'
+        );
+        return;
+      }
+    }
+    this.processTransaction(isYes, amountTransaction);
   }
 
-  processTransaction(isYes: boolean) {
+  processTransaction(isYes: boolean, amountTransaction: number) {
     if (isYes) {
-      const amount = Number(this.displayAmount.replace(/\,/g, ''));
-      this.transaction.pinNo = 12345;
-      this.transaction.amount = amount;
+      this.transaction.userId = this.userId;
+      this.transaction.amount = amountTransaction;
       this.transaction.typeOfTransaction = this.typeOfTransaction;
       this.authenticationService.addTransaction(this.transaction!).subscribe(
-        (data) => {
+        () => {
           this.displayAmount = '0';
-          this.alertyType = 'alert-success';
-          this.notifyMessage = 'Transaction successfully saved.';
+          this.tempAmount = '0';
+          this.showNotify('Transaction successfully saved.', 'alert-success');
+          this.getCurrentBalance();
         },
         (error) => {
-          this.alertyType = 'alert-danger';
-          this.notifyMessage = error;
+          this.showNotify(error, 'alert-danger');
         }
       );
-
-      setTimeout(() => {
-        this.notifyMessage = '';
-      }, 2000);
     }
+  }
+
+  validateCurrentBalance = (amountTransaction: number) => {
+    if (amountTransaction < this.currentBalance) {
+      return true;
+    }
+    return false;
+  };
+
+  getCurrentBalance() {
+    this.authenticationService
+      .getCurrentBalance(this.userId)
+      .subscribe((data) => {
+        this.currentBalance = data;
+        this.authenticationService.saveCurrentBal(data);
+      });
+  }
+
+  showNotify(message: string, alertType: string) {
+    this.alertyType = alertType;
+    this.notifyMessage = message;
+
+    setTimeout(() => {
+      this.notifyMessage = '';
+    }, 2000);
   }
 }

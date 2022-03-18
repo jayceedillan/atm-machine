@@ -1,5 +1,5 @@
 export interface Transaction {
-  pinNo: number;
+  userId: number;
   amount: number;
   typeOfTransaction: string;
   transactionDate: Date;

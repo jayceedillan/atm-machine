@@ -10,11 +10,16 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 export class TransactionComponent implements OnInit {
   transactions: Transaction[] = [];
 
+  currentBalance: number = 0;
   constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.authenticationService.getTransactions().subscribe((data) => {
+    let id = Number(this.authenticationService.getUserToken());
+
+    this.authenticationService.getTransactions(id).subscribe((data) => {
       this.transactions = data;
     });
+
+    this.currentBalance = Number(this.authenticationService.getCurrentBal());
   }
 }
