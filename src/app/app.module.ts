@@ -8,16 +8,15 @@ import { LoginComponent } from './pages/login/login.component';
 import { TransactionComponent } from './pages/transaction/transaction.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  HttpClient,
-  HttpClientModule,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ExceptionIntercept } from './interceptors/error-catching.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './components/modal/modal.component';
 import { ButtonComponent } from './components/button/button.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './store/user.reducer';
 
 @NgModule({
   declarations: [
@@ -36,6 +35,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    StoreModule.forRoot({ user: userReducer }),
   ],
   providers: [
     {

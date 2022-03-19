@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
 import { Transaction } from 'src/app/models/transaction.model';
+import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { getCurrentBalance } from 'src/app/store/user.action';
+import { userCurrentBalance } from 'src/app/store/user.selector';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +13,20 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private store: Store<{ user: User }>
+  ) {}
+
+  currentBalance: number = 0;
 
   ngOnInit(): void {
     this.userId = Number(this.authenticationService.getUserToken());
     this.getCurrentBalance();
+
+    this.store.select('user').subscribe((x) => {
+      this.currentBalance = x.currentBalance;
+    });
   }
 
   title = 'ATM-Machine';
@@ -30,7 +44,6 @@ export class HomeComponent implements OnInit {
   userId: number = 0;
   notifyMessage: string = '';
   alertyType: string = 'alert-success';
-  currentBalance: number = 0;
 
   clickAmount(val: number) {
     this.tempAmount = `${this.tempAmount}${val}`;
@@ -102,11 +115,14 @@ export class HomeComponent implements OnInit {
   };
 
   getCurrentBalance() {
+    debugger;
     this.authenticationService
       .getCurrentBalance(this.userId)
       .subscribe((data) => {
-        this.currentBalance = data;
-        this.authenticationService.saveCurrentBal(data);
+        const user: User = { userId: 0, currentBalance: 0 };
+        user.userId = this.userId;
+        user.currentBalance = data;
+        this.store.dispatch(getCurrentBalance({ user: user }));
       });
   }
 
