@@ -1,39 +1,20 @@
-<div class="main-panel">
-  <div class="content">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card card">
-          <div class="card-header text-left">
-            <h4 class="card-title">Transaction List</h4>
-            <h4 class="card-title">
-              Current Balance:
-              <span class="font-weight-bold"
-                >{{ currentBalance | number: "1.2-2" }}
-              </span>
-            </h4>
-          </div>
-          <div class="card-body">
-            <div class="table-full-width table-responsive">
-              <table class="table tablesorter text-left">
-                <thead class="text-primary text-left">
-                  <tr>
-                    <th>Amount</th>
-                    <th>Type Of Transaction</th>
-                    <th>Transaction Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let transaction of transactions">
-                    <td>{{ transaction.amount }}</td>
-                    <td>{{ transaction.typeOfTransaction }}</td>
-                    <td>{{ transaction.transactionDate }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<app-maincontent title="Transaction List">
+  <div class="table-full-width table-responsive">
+    <table class="table tablesorter text-left">
+      <thead class="text-primary text-left">
+        <tr>
+          <th>Amount</th>
+          <th>Type Of Transaction</th>
+          <th>Transaction Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.amount }}</td>
+          <td>{{ transaction.typeOfTransaction }}</td>
+          <td>{{ transaction.transactionDate }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</div>
+</app-maincontent>

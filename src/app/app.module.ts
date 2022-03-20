@@ -17,6 +17,10 @@ import { NotificationsComponent } from './components/notifications/notifications
 
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './store/user.reducer';
+import { BalanceComponent } from './components/balance/balance.component';
+
+import { CardHeaderComponent } from './components/card-header/card-header.component';
+import { MaincontentComponent } from './components/maincontent/maincontent.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,9 @@ import { userReducer } from './store/user.reducer';
     ModalComponent,
     ButtonComponent,
     NotificationsComponent,
+    BalanceComponent,
+    CardHeaderComponent,
+    MaincontentComponent,
   ],
   imports: [
     BrowserModule,

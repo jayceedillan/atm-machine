@@ -1,70 +1,49 @@
-<div class="main-panel">
-  <div class="content">
-    <div class="row">
-      <div class="col-md-12">
-        <app-notifications
-          *ngIf="notifyMessage"
-          [alertType]="alertyType"
-          [notifyMessage]="notifyMessage"
-        ></app-notifications>
-        <div class="card card">
-          <div class="card-header text-left">
-            <h4 class="card-title">ATM Machine</h4>
-            <h4 class="card-title">
-              Current Balance:
-              <span class="font-weight-bold"
-                >{{ currentBalance | number: "1.2-2" }}
-              </span>
-            </h4>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div
-                *ngFor="let number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]"
-                class="col-md-4"
-              >
-                <button
-                  type="button"
-                  class="btn btn-block btn-default button-numbers"
-                  (click)="clickAmount(number)"
-                >
-                  {{ number }}
-                </button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 pt-4 text-right">
-                <p class="blockquote blockquote-primary">
-                  {{ displayAmount }}
-                </p>
-              </div>
-            </div>
-          </div>
+<app-maincontent [title]="title">
+  <app-notifications
+    *ngIf="notifyMessage"
+    [alertType]="alertyType"
+    [notifyMessage]="notifyMessage"
+  ></app-notifications>
 
-          <div class="row">
-            <div class="col-md-4">
-              <app-button
-                (transactionChange)="openModal($event)"
-                typeOfTransaction="deposit"
-                title="Deposit"
-              ></app-button>
-            </div>
-            <div class="col-md-4">
-              <app-button (transactionChange)="openModal($event)"></app-button>
-            </div>
-
-            <div class="col-md-4">
-              <app-button
-                (transactionChange)="openModal($event)"
-                typeOfTransaction="clear"
-                title="Clear"
-              ></app-button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="row">
+    <div *ngFor="let number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]" class="col-md-4">
+      <button
+        type="button"
+        class="btn btn-block btn-default button-numbers"
+        (click)="clickAmount(number)"
+      >
+        {{ number }}
+      </button>
     </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-md-12 pt-4 text-right">
+      <p class="blockquote blockquote-primary">
+        {{ displayAmount }}
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <app-button
+        (transactionChange)="openModal($event)"
+        typeOfTransaction="deposit"
+        title="Deposit"
+      ></app-button>
+    </div>
+    <div class="col-md-4">
+      <app-button (transactionChange)="openModal($event)"></app-button>
+    </div>
+
+    <div class="col-md-4">
+      <app-button
+        (transactionChange)="openModal($event)"
+        typeOfTransaction="clear"
+        title="Clear"
+      ></app-button>
+    </div>
+  </div>
+</app-maincontent>
 
 <app-modal *ngIf="showModal" (modalIsYes)="isProceed($event)"></app-modal>
